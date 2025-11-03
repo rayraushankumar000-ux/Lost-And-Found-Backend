@@ -2,13 +2,14 @@ require('dotenv').config();
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
+const path = require('path'); // <-- added this
 
 const authRoutes = require('./routes/auth'); 
 const itemsRoutes = require('./routes/items');
 const usersRoutes = require('./routes/users');
 const adminRoutes = require('./routes/admin');
 const imageRecognitionRoutes = require('./routes/imageRecognition');
-const connectDB = require('./config/database'); // make sure the filename matches: db.js, not database.js
+const connectDB = require('./config/database');
 
 const app = express();
 
@@ -17,6 +18,9 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
 connectDB();
+
+// ✅ Serve static files like favicon.ico from "public" folder
+app.use(express.static(path.join(__dirname, 'public')));
 
 // Request logging middleware (for debugging)
 app.use((req, res, next) => {
