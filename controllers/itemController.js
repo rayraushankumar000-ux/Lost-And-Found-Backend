@@ -32,8 +32,8 @@ exports.createItem = async (req, res, next) => {
       longitude
     } = req.body;
     
-    // Use status from route or body (route takes precedence)
-    const finalStatus = itemStatus || status || 'lost';
+    // Use status from body if provided, otherwise infer from route; default to 'lost'
+    const finalStatus = (status || itemStatus) || 'lost';
 
     // Build location object - handle if sent as JSON string or individual fields
     let locationObj;
